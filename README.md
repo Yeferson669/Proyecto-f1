@@ -18,8 +18,8 @@ Tecnologías principales
 
 ## 📂 Estructura del proyecto
 
+<img width="480" height="184" alt="Screenshot 2025-10-25 2 41 40 AM" src="https://github.com/user-attachments/assets/fcc1225b-8f74-4866-bc6f-7c5e3c82bc0d" />
 
-<img width="392" height="322" alt="image" src="https://github.com/user-attachments/assets/93d69723-971f-4c68-878f-efbff4162f14" />
 
 
 ---
@@ -38,17 +38,17 @@ fastapi dev
 
 **Diagrama entidad-relacion**
 
+<img width="392" height="322" alt="Screenshot 2025-10-25 2 40 59 AM" src="https://github.com/user-attachments/assets/2675fee1-2576-4fc1-a5bb-dbb67cc95ac5" />
 
 
-<img width="480" height="184" alt="image" src="https://github.com/user-attachments/assets/2c4a1a93-a957-4a74-9a25-cb5f1984ae9f" />
 
 
 
 **Edpoints**
 
+<img width="671" height="343" alt="Screenshot 2025-10-25 2 37 48 AM" src="https://github.com/user-attachments/assets/2f413bd7-5c98-4638-86bb-6fb0929298b6" />
 
 
-<img width="671" height="343" alt="image" src="https://github.com/user-attachments/assets/9cc1f8af-a74a-4801-a83f-4fa898f78cba" />
 
 
 
