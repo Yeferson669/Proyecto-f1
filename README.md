@@ -17,22 +17,7 @@ Tecnologías principales
 ---
 
 ## 📂 Estructura del proyecto
-Proyecto-f1/
-│
-├── main.py
-├── database.py
-├── models.py
-├── schemas.py
-│
-├── routers/
-│ ├── escuderias.py
-│ ├── pilotos.py
-│ ├── circuitos.py
-│ ├── perfiles.py
-│ └── tiempos.py
-│
-├── f1_local.db # Se genera automáticamente al ejecutar
-└── README.md
+<img width="392" height="322" alt="image" src="https://github.com/user-attachments/assets/93d69723-971f-4c68-878f-efbff4162f14" />
 
 
 ---
@@ -50,15 +35,8 @@ pip install requirements.txt
 fastapi dev
 
 **Diagrama entidad-relacion**
-┌────────────┐      1 ────<      ┌────────────┐
-│ ESCUDERIA  │──────────────────▶│   PILOTO   │
-└────────────┘                   └────────────┘
-                                     ││
-                                     │└── 1:1 ───▶ PERFILES_PILOTO
-                                     │
-                                     ├── N:M ───▶ CIRCUITOS
-                                     │
-                                     └── 1:N ───▶ TIEMPOS
+<img width="480" height="184" alt="image" src="https://github.com/user-attachments/assets/2c4a1a93-a957-4a74-9a25-cb5f1984ae9f" />
+
 
 
 **Edpoints**
