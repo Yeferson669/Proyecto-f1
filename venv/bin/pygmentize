@@ -1,4 +1,4 @@
-#!/mnt/c/Users/yefer/OneDrive/Escritorio/Proyecto/venv/bin/python3
+#!/home/yeff/Git/Proyecto-f1/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

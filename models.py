@@ -2,9 +2,9 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Date, Float
 from sqlalchemy.orm import relationship
 from database import Base
 
-# -------------------------------------------------
+# ==========================================================
 # TABLA INTERMEDIA MUCHOS A MUCHOS (Piloto - Circuito)
-# -------------------------------------------------
+# ==========================================================
 piloto_circuito = Table(
     "piloto_circuito",
     Base.metadata,
@@ -12,25 +12,10 @@ piloto_circuito = Table(
     Column("circuito_id", ForeignKey("circuitos.id"), primary_key=True),
 )
 
-# -------------------------------------------------
-# MODELO CIRCUITO
-# -------------------------------------------------
-class Circuito(Base):
-    __tablename__ = "circuitos"
+# ==========================================================
+# MODELOS
+# ==========================================================
 
-    id = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String, unique=True, index=True)
-    pais = Column(String)
-    longitud_km = Column(Integer)
-    activo = Column(Boolean, default=True)
-
-    pilotos = relationship("Piloto", secondary=piloto_circuito, back_populates="circuitos")
-    tiempos = relationship("Tiempo", back_populates="circuito")  # relación 1:N con tiempos
-
-
-# -------------------------------------------------
-# MODELO ESCUDERIA
-# -------------------------------------------------
 class Escuderia(Base):
     __tablename__ = "escuderias"
 
@@ -43,9 +28,6 @@ class Escuderia(Base):
     pilotos = relationship("Piloto", back_populates="escuderia")
 
 
-# -------------------------------------------------
-# MODELO PILOTO
-# -------------------------------------------------
 class Piloto(Base):
     __tablename__ = "pilotos"
 
@@ -56,16 +38,12 @@ class Piloto(Base):
     activo = Column(Boolean, default=True)
     escuderia_id = Column(Integer, ForeignKey("escuderias.id"))
 
-    # Relaciones
-    escuderia = relationship("Escuderia", back_populates="pilotos")  # 1:N
-    perfil = relationship("PerfilPiloto", back_populates="piloto", uselist=False)  # 1:1
-    circuitos = relationship("Circuito", secondary=piloto_circuito, back_populates="pilotos")  # N:M
-    tiempos = relationship("Tiempo", back_populates="piloto")  # 1:N con tiempos
+    escuderia = relationship("Escuderia", back_populates="pilotos")
+    perfil = relationship("PerfilPiloto", back_populates="piloto", uselist=False)
+    circuitos = relationship("Circuito", secondary=piloto_circuito, back_populates="pilotos")
+    tiempos = relationship("Tiempo", back_populates="piloto")
 
 
-# -------------------------------------------------
-# MODELO PERFIL DE PILOTO (1:1)
-# -------------------------------------------------
 class PerfilPiloto(Base):
     __tablename__ = "perfiles_piloto"
 
@@ -78,20 +56,29 @@ class PerfilPiloto(Base):
     piloto = relationship("Piloto", back_populates="perfil")
 
 
-# -------------------------------------------------
-# MODELO TIEMPO (nuevo)
-# -------------------------------------------------
+class Circuito(Base):
+    __tablename__ = "circuitos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, unique=True, index=True)
+    pais = Column(String)
+    longitud_km = Column(Integer)
+    activo = Column(Boolean, default=True)
+
+    pilotos = relationship("Piloto", secondary=piloto_circuito, back_populates="circuitos")
+    tiempos = relationship("Tiempo", back_populates="circuito")
+
+
 class Tiempo(Base):
     __tablename__ = "tiempos"
 
     id = Column(Integer, primary_key=True, index=True)
     piloto_id = Column(Integer, ForeignKey("pilotos.id"))
     circuito_id = Column(Integer, ForeignKey("circuitos.id"))
-    tiempo_vuelta = Column(Float)  # tiempo en segundos o minutos
-    posicion = Column(Integer)     # posición final en carrera
+    tiempo_vuelta = Column(Float)
+    posicion = Column(Integer)
     fecha = Column(Date)
     activo = Column(Boolean, default=True)
 
-    # Relaciones inversas
     piloto = relationship("Piloto", back_populates="tiempos")
     circuito = relationship("Circuito", back_populates="tiempos")
