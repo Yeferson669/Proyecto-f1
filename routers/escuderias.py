@@ -1,42 +1,55 @@
-from fastapi import APIRouter, HTTPException, Depends, status
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
-from models import Escuderia as EscuderiaModel
+from database import SessionLocal
+from models import Escuderia
 from schemas import Escuderia as EscuderiaSchema, EscuderiaBase
 
 router = APIRouter(prefix="/escuderias", tags=["Escuderías"])
 
-@router.post("/", response_model=EscuderiaSchema, status_code=status.HTTP_201_CREATED)
-def crear_escuderia(escuderia: EscuderiaBase, db: Session = Depends(get_db)):
-    existente = db.query(EscuderiaModel).filter(EscuderiaModel.nombre == escuderia.nombre).first()
-    if existente:
-        raise HTTPException(status_code=400, detail="Escudería ya existente")
-    nueva = EscuderiaModel(**escuderia.dict())
-    db.add(nueva)
-    db.commit()
-    db.refresh(nueva)
-    return nueva
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @router.get("/", response_model=list[EscuderiaSchema])
-def listar_escuderias(db: Session = Depends(get_db)):
-    return db.query(EscuderiaModel).filter(EscuderiaModel.activo == True).all()
+def get_escuderias(db: Session = Depends(get_db)):
+    return db.query(Escuderia).filter(Escuderia.activo == True).all()
 
-@router.put("/{id}", response_model=EscuderiaSchema)
-def actualizar_escuderia(id: int, datos: EscuderiaBase, db: Session = Depends(get_db)):
-    esc = db.query(EscuderiaModel).filter(EscuderiaModel.id == id).first()
+@router.get("/{escuderia_id}", response_model=EscuderiaSchema)
+def get_escuderia_by_id(escuderia_id: int, db: Session = Depends(get_db)):
+    esc = db.query(Escuderia).filter(Escuderia.id == escuderia_id, Escuderia.activo == True).first()
     if not esc:
-        raise HTTPException(404, detail="Escudería no encontrada")
-    for k, v in datos.dict().items():
-        setattr(esc, k, v)
-    db.commit()
-    db.refresh(esc)
+        raise HTTPException(status_code=404, detail="Escudería no encontrada")
     return esc
 
-@router.delete("/{id}")
-def eliminar_escuderia(id: int, db: Session = Depends(get_db)):
-    esc = db.query(EscuderiaModel).filter(EscuderiaModel.id == id).first()
+@router.get("/buscar/", response_model=list[EscuderiaSchema])
+def buscar_escuderias(nombre: str = None, db: Session = Depends(get_db)):
+    if not nombre:
+        raise HTTPException(status_code=400, detail="Debe proporcionar un nombre")
+    results = db.query(Escuderia).filter(Escuderia.nombre.ilike(f"%{nombre}%"), Escuderia.activo == True).all()
+    if not results:
+        raise HTTPException(status_code=404, detail="No se encontraron escuderías con ese nombre")
+    return results
+
+@router.post("/", response_model=EscuderiaSchema)
+def create_escuderia(escuderia: EscuderiaBase, db: Session = Depends(get_db)):
+    db_esc = Escuderia(**escuderia.dict())
+    db.add(db_esc)
+    db.commit()
+    db.refresh(db_esc)
+    return db_esc
+
+@router.delete("/{escuderia_id}")
+def eliminar_escuderia(escuderia_id: int, db: Session = Depends(get_db)):
+    esc = db.query(Escuderia).filter(Escuderia.id == escuderia_id).first()
     if not esc:
-        raise HTTPException(404, detail="Escudería no encontrada")
+        raise HTTPException(status_code=404, detail="Escudería no encontrada")
     esc.activo = False
     db.commit()
-    return {"mensaje": "Escudería inactivada"}
+    return {"mensaje": f"Escudería {esc.nombre} fue marcada como eliminada"}
+
+@router.get("/eliminados/", response_model=list[EscuderiaSchema])
+def get_eliminadas(db: Session = Depends(get_db)):
+    return db.query(Escuderia).filter(Escuderia.activo == False).all()

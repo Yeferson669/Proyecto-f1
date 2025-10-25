@@ -2,9 +2,6 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Date, Float
 from sqlalchemy.orm import relationship
 from database import Base
 
-# ==========================================================
-# TABLA INTERMEDIA MUCHOS A MUCHOS (Piloto - Circuito)
-# ==========================================================
 piloto_circuito = Table(
     "piloto_circuito",
     Base.metadata,
@@ -12,9 +9,7 @@ piloto_circuito = Table(
     Column("circuito_id", ForeignKey("circuitos.id"), primary_key=True),
 )
 
-# ==========================================================
-# MODELOS
-# ==========================================================
+
 
 class Escuderia(Base):
     __tablename__ = "escuderias"
@@ -24,7 +19,7 @@ class Escuderia(Base):
     pais = Column(String)
     activo = Column(Boolean, default=True)
 
-    # Relación 1:N con pilotos
+    
     pilotos = relationship("Piloto", back_populates="escuderia")
 
 

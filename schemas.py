@@ -4,7 +4,6 @@ from typing import List, Optional
 from datetime import date
 
 
-# ---------- CIRCUITOS ----------
 class CircuitoBase(BaseModel):
     nombre: str
     pais: Optional[str] = None
@@ -19,7 +18,7 @@ class Circuito(CircuitoBase):
         orm_mode = True
 
 
-# ---------- PERFIL PILOTO ----------
+
 class PerfilPilotoBase(BaseModel):
     fecha_nacimiento: Optional[date] = None
     biografia: Optional[str] = None
@@ -34,7 +33,7 @@ class PerfilPiloto(PerfilPilotoBase):
         orm_mode = True
 
 
-# ---------- PILOTOS ----------
+
 class PilotoBase(BaseModel):
     nombre: str
     nacionalidad: str
@@ -52,7 +51,7 @@ class Piloto(PilotoBase):
         orm_mode = True
 
 
-# ---------- ESCUDERÍAS ----------
+
 class EscuderiaBase(BaseModel):
     nombre: str
     pais: str
@@ -67,7 +66,7 @@ class Escuderia(EscuderiaBase):
         orm_mode = True
 
 
-# ---------- TIEMPOS ----------
+
 class TiempoBase(BaseModel):
     piloto_id: int
     circuito_id: int
