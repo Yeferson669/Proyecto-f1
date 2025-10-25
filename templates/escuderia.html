@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ escuderia }} - Pilotos</title>
+</head>
+<body>
+    <h1>Pilotos de {{ escuderia }}</h1>
+    <ul>
+        {% for piloto in pilotos %}
+        <li><a href="/piloto/{{ piloto }}">{{ piloto }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="/">⬅ Volver a escuderías</a>
+</body>
+</html>

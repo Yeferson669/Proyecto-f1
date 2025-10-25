@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ team_name }} - Pilotos</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Escudería: {{ team_name }}</h1>
+
+    <div class="pilotos-container">
+        {% for piloto in pilotos %}
+        <div class="piloto-card">
+            <h2>{{ piloto }}</h2>
+            <a href="/driver/{{ piloto }}">Ver detalles</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <br>
+    <a href="/">⬅ Volver al inicio</a>
+</body>
+</html>

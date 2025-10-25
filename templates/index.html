@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Fórmula 1 - Escuderías</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>🏎️ Escuderías de Fórmula 1</h1>
+    <div class="container">
+        {% for team_name, team_data in teams.items() %}
+            <div class="card">
+                <h2>{{ team_name }}</h2>
+                <a href="/team/{{ team_name }}">Ver pilotos</a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
