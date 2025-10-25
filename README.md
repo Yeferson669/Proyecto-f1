@@ -17,6 +17,8 @@ Tecnologías principales
 ---
 
 ## 📂 Estructura del proyecto
+
+
 <img width="392" height="322" alt="image" src="https://github.com/user-attachments/assets/93d69723-971f-4c68-878f-efbff4162f14" />
 
 
@@ -35,12 +37,21 @@ pip install requirements.txt
 fastapi dev
 
 **Diagrama entidad-relacion**
+
+
+
 <img width="480" height="184" alt="image" src="https://github.com/user-attachments/assets/2c4a1a93-a957-4a74-9a25-cb5f1984ae9f" />
 
 
 
 **Edpoints**
+
+
+
 <img width="671" height="343" alt="image" src="https://github.com/user-attachments/assets/9cc1f8af-a74a-4801-a83f-4fa898f78cba" />
+
+
+
 
 **Autor**
 Yeferson David Guaca Buitron
