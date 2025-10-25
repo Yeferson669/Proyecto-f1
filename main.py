@@ -13,7 +13,7 @@ from data import tiempos
 
 app = FastAPI(title="Fórmula 1 - Proyecto Integrador")
 
-# Crear tablas si no existen
+# Crear tablas si no existen.
 Base.metadata.create_all(bind=engine)
 
 # Archivos estáticos y templates
